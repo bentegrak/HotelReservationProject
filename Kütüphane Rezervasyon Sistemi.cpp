@@ -18,7 +18,7 @@ typedef struct{
 typedef struct{
 	int kisiSayisi;
 	int odaDurumu;//doluysa1,Bossa0
-	int odaNumarasi;//1-100Arasýnda
+	int odaNumarasi;//1-100Arasinda
 	double fiyatBilgisi;
 	musteriBilgileri musteri;
 	tarihBilgileri girisTarihi;
@@ -40,30 +40,30 @@ void yeniMusteriEkleme(odaBilgileri *odalar){
 		return;	
 	}
 	
-	odalar[sorgulanacakOda-1].odaNumarasi=sorgulanacakOda; //odaNumarasýAtandý
+	odalar[sorgulanacakOda-1].odaNumarasi=sorgulanacakOda; //odaNumarasï¿½Atandï¿½
 	
-	printf("Lütfen ad ve soyad bilgilerini giriniz:");
+	printf("Lutfen ad ve soyad bilgilerini giriniz:");
 	scanf("%s%s",&musteriAdi,&musteriSoyadi);
 	odalar[sorgulanacakOda-1].musteri.musteriAdi=(char*)malloc(sizeof(char)*strlen(musteriAdi)+1);
 	odalar[sorgulanacakOda-1].musteri.musteriSoyadi=(char*)malloc(sizeof(char)*strlen(musteriSoyadi)+1);
 	strcpy(odalar[sorgulanacakOda-1].musteri.musteriAdi,musteriAdi);
 	strcpy(odalar[sorgulanacakOda-1].musteri.musteriSoyadi,musteriSoyadi);
-	printf("Lütfen kac kisi olacaginizi giriniz:");
+	printf("Lutfen kac kisi olacaginizi giriniz:");
 	scanf("%d",&odalar[sorgulanacakOda-1].kisiSayisi);
 	printf("Lutfen giris tarihi bilgisini (gun:ay:yil) seklinde giriniz");
 	scanf("%d%d%d",&odalar[sorgulanacakOda-1].girisTarihi.gun,&odalar[sorgulanacakOda-1].girisTarihi.ay,&odalar[sorgulanacakOda-1].girisTarihi.yil);
 	printf("Lutfen cikis tarihi bilgisini (gun:ay:yil) seklinde giriniz");
 	scanf("%d%d%d",&odalar[sorgulanacakOda-1].cikisTarihi.gun,&odalar[sorgulanacakOda-1].cikisTarihi.ay,&odalar[sorgulanacakOda-1].cikisTarihi.yil);
 	odalar[sorgulanacakOda-1].fiyatBilgisi=fiyatHesaplama(odalar,sorgulanacakOda);
-	printf("Ödemeniz gereken total tutar:%.2lf\n",odalar[sorgulanacakOda-1].fiyatBilgisi);
-	printf("Onaylýyor musunuz? (E-H):");
+	printf("Odemeniz gereken total tutar:%.2lf\n",odalar[sorgulanacakOda-1].fiyatBilgisi);
+	printf("Onayliyor musunuz? (E-H):");
 	fflush(stdin);
 	ch=getchar();
 	if(ch=='H'){
 		rezervasyonTemizle(odalar,sorgulanacakOda);
 		return;
 	}
-	odalar[sorgulanacakOda-1].odaDurumu=1; //odamýzDolu	
+	odalar[sorgulanacakOda-1].odaDurumu=1; //odamizDolu
 }
 
 int main(){
@@ -71,12 +71,12 @@ int main(){
 	yetkiSeviyeleri kullaniciYetkisi;
 	char ch;
 	
-	odaBilgileri *odaDizisi;//tümBilgilerBuradaTutulacak
-	odaDizisi=(odaBilgileri*)calloc(ODA_SAYISI,sizeof(odaBilgileri));//dinamikÞekildeOluþturduk
+	odaBilgileri *odaDizisi;//tumBilgilerBuradaTutulacak
+	odaDizisi=(odaBilgileri*)calloc(ODA_SAYISI,sizeof(odaBilgileri));//dinamikSekildeOlusturduk
 	printf("\t\t\t Otel Rezervasyon Sistemine Hosgeldiniz..\n");
 	printf("Lutfen burada calisiyorsaniz sifrenizi giriniz..");
 	scanf("%d",&kullanicininGirdigiSifre);
-	if(belirlenenSifre==kullanicininGirdigiSifre){//kullanýcýOtelinBirÇalýþaný,YetkisiPersonel 
+	if(belirlenenSifre==kullanicininGirdigiSifre){//kullaniciOtelinBirCalisani,YetkisiPersonel
 		kullaniciYetkisi=personel;
 	}
 	else{
