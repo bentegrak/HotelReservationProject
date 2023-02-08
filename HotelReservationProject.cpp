@@ -29,10 +29,38 @@ typedef enum{
 	musteri=0,personel=1
 }yetkiSeviyeleri;
 
+int gunFarkiHesapla(tarihBilgileri girisTarihi,tarihBilgileri cikisTarihi){
+	if(girisTarihi.gun>cikisTarihi.gun){
+		cikisTarihi.ay-=1;
+		cikisTarihi.gun+=30;
+	}
+	if(girisTarihi.ay>cikisTarihi.ay){
+		cikisTarihi.yil-=1;
+		cikisTarihi.ay+=12;
+	}
+	tarihBilgileri tarihFarki;
+	tarihFarki.gun=cikisTarihi.gun-girisTarihi.gun;
+	tarihFarki.ay=cikisTarihi.ay-girisTarihi.ay;
+	tarihFarki.yil=cikisTarihi.yil-girisTarihi.yil;
+}
+
+double fiyatHesaplama(odaBilgileri *odalar,int odaNumarasi){
+	int gunFarki=gunFarkiHesapla(odalar[odaNumarasi-1].girisTarihi,odalar[odaNumarasi-1].cikisTarihi);
+	printf("Kalacaginiz Gun Sayisi:%d\n",gunFarki);
+	return gunFarki*150*odalar[odaNumarasi-1].kisiSayisi;
+}
+
+void rezervasyonTemizle(odaBilgileri*odalar,int odaNumarasi){
+	odalar[odaNumarasi-1].odaDurumu=0;//odayiBosalttik
+	free(odalar[odaNumarasi-1].musteri.musteriAdi);
+	free(odalar[odaNumarasi-1].musteri.musteriSoyadi);
+	printf("%d numarali odanin cikis/iptal islemi tamamlanmistir.\n",odaNumarasi);
+}
+
 void yeniMusteriEkleme(odaBilgileri *odalar){
 	
 	int sorgulanacakOda;
-	char musteriAdi[20],musteriSoyadi[20];
+	char musteriAdi[20],musteriSoyadi[20],ch;
 	printf("Lutfen kayit olmak istediginiz odayi giriniz:");
 	scanf("%d",&sorgulanacakOda);
 	if(odalar[sorgulanacakOda-1].odaDurumu!=0){
@@ -40,7 +68,7 @@ void yeniMusteriEkleme(odaBilgileri *odalar){
 		return;	
 	}
 	
-	odalar[sorgulanacakOda-1].odaNumarasi=sorgulanacakOda; //odaNumaras�Atand�
+	odalar[sorgulanacakOda-1].odaNumarasi=sorgulanacakOda; //odaNumarasiAtandi
 	
 	printf("Lutfen ad ve soyad bilgilerini giriniz:");
 	scanf("%s%s",&musteriAdi,&musteriSoyadi);
@@ -51,11 +79,12 @@ void yeniMusteriEkleme(odaBilgileri *odalar){
 	printf("Lutfen kac kisi olacaginizi giriniz:");
 	scanf("%d",&odalar[sorgulanacakOda-1].kisiSayisi);
 	printf("Lutfen giris tarihi bilgisini (gun:ay:yil) seklinde giriniz");
-	scanf("%d%d%d",&odalar[sorgulanacakOda-1].girisTarihi.gun,&odalar[sorgulanacakOda-1].girisTarihi.ay,&odalar[sorgulanacakOda-1].girisTarihi.yil);
+	scanf("%d:%d:%d",&odalar[sorgulanacakOda-1].girisTarihi.gun,&odalar[sorgulanacakOda-1].girisTarihi.ay,&odalar[sorgulanacakOda-1].girisTarihi.yil);
 	printf("Lutfen cikis tarihi bilgisini (gun:ay:yil) seklinde giriniz");
-	scanf("%d%d%d",&odalar[sorgulanacakOda-1].cikisTarihi.gun,&odalar[sorgulanacakOda-1].cikisTarihi.ay,&odalar[sorgulanacakOda-1].cikisTarihi.yil);
+	scanf("%d:%d:%d",&odalar[sorgulanacakOda-1].cikisTarihi.gun,&odalar[sorgulanacakOda-1].cikisTarihi.ay,&odalar[sorgulanacakOda-1].cikisTarihi.yil);
+	
 	odalar[sorgulanacakOda-1].fiyatBilgisi=fiyatHesaplama(odalar,sorgulanacakOda);
-	printf("Odemeniz gereken total tutar:%.2lf\n",odalar[sorgulanacakOda-1].fiyatBilgisi);
+	printf("Odemeniz gereken total tutar:%d\n",odalar[sorgulanacakOda-1].fiyatBilgisi);
 	printf("Onayliyor musunuz? (E-H):");
 	fflush(stdin);
 	ch=getchar();
