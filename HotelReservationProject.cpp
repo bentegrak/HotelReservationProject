@@ -42,6 +42,9 @@ int gunFarkiHesapla(tarihBilgileri girisTarihi,tarihBilgileri cikisTarihi){
 	tarihFarki.gun=cikisTarihi.gun-girisTarihi.gun;
 	tarihFarki.ay=cikisTarihi.ay-girisTarihi.ay;
 	tarihFarki.yil=cikisTarihi.yil-girisTarihi.yil;
+
+	int gunFarki=tarihFarki.yil*365+tarihFarki.ay*30+tarihFarki.gun;
+	return gunFarki;
 }
 
 double fiyatHesaplama(odaBilgileri *odalar,int odaNumarasi){
