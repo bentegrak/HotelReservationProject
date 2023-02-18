@@ -61,6 +61,21 @@ void rezervasyonTemizle(odaBilgileri*odalar,int odaNumarasi){
 	printf("%d numarali odanin cikis/iptal islemi tamamlanmistir.\n",odaNumarasi);
 }
 
+void doluOdaBilgileriYazdirma(odaBilgileri* odalar){
+	int i;
+	for(i=0;i<ODA_SAYISI;i++){
+		if(odalar[i].odaDurumu!=0){
+			printf("----------------------------------------------------------------------\n");
+			printf("Oda Numarasi:%d\n",odalar[i].odaNumarasi);
+			printf("Musteri Adi-Soyadi:%s %s\n",odalar[i].musteri.musteriAdi,odalar[i].musteri.musteriSoyadi);
+			printf("Kisi Sayisi:%d\n",odalar[i].kisiSayisi);
+			printf("Fiyat Bilgisi%.2lf\n",odalar[i].fiyatBilgisi);
+			printf("Giris Tarihi:%d:%d:%d\n",odalar[i].girisTarihi.gun,odalar[i].girisTarihi.ay,odalar[i].girisTarihi.yil);
+			printf("Cikis Tarihi:%d:%d:%d\n",odalar[i].cikisTarihi.gun,odalar[i].cikisTarihi.ay,odalar[i].cikisTarihi.yil);
+		}
+	}
+}
+
 void yeniMusteriEkleme(odaBilgileri *odalar){
 	
 	int sorgulanacakOda;
@@ -100,7 +115,7 @@ void yeniMusteriEkleme(odaBilgileri *odalar){
 }
 
 int main(){
-	int belirlenenSifre=123456,kullanicininGirdigiSifre;
+	int belirlenenSifre=123456,kullanicininGirdigiSifre,odaNumarasi;
 	yetkiSeviyeleri kullaniciYetkisi;
 	char ch;
 	
@@ -132,8 +147,19 @@ int main(){
 			case 'S':
 				break;
 			case 'G':
+				if(kullaniciYetkisi==personel){
+					doluOdaBilgileriYazdirma(odaDizisi);
+				}
+				else{
+					printf("Bu alan sadece calisanlar tarafindan kullanilabilir.");
+				}
 				break;	
 			case 'C':
+				if(kullaniciYetkisi==personel){
+					printf("Cikis yapmak istediginiz odanin numarasini giriniz:");
+					scanf("%d",&odaNumarasi);
+					rezervasyonTemizle(odaDizisi,odaNumarasi);// daha onceden kullandigimiz rezervasyontemizle fonksiyonu
+				}
 				break;	
 			case 'F':
 				break;
