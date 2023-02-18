@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 #define ODA_SAYISI 100
 
 typedef struct{
@@ -87,7 +88,7 @@ void yeniMusteriEkleme(odaBilgileri *odalar){
 	scanf("%d:%d:%d",&odalar[sorgulanacakOda-1].cikisTarihi.gun,&odalar[sorgulanacakOda-1].cikisTarihi.ay,&odalar[sorgulanacakOda-1].cikisTarihi.yil);
 	
 	odalar[sorgulanacakOda-1].fiyatBilgisi=fiyatHesaplama(odalar,sorgulanacakOda);
-	printf("Odemeniz gereken total tutar:%d\n",odalar[sorgulanacakOda-1].fiyatBilgisi);
+	printf("Odemeniz gereken total tutar:%.2lf\n",odalar[sorgulanacakOda-1].fiyatBilgisi);
 	printf("Onayliyor musunuz? (E-H):");
 	fflush(stdin);
 	ch=getchar();
