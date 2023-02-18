@@ -114,6 +114,52 @@ void yeniMusteriEkleme(odaBilgileri *odalar){
 	odalar[sorgulanacakOda-1].odaDurumu=1; //odamizDolu
 }
 
+void odaBilgisiSorgulama(odaBilgileri*odalar,int odaNumarasi){
+	if(odalar[odaNumarasi-1].odaDurumu!=0){
+		printf("%d numarali oda %d:%d:%d tarihine kadar doludur.\n",odaNumarasi,odalar[odaNumarasi-1].cikisTarihi.gun,odalar[odaNumarasi-1].cikisTarihi.ay,odalar[odaNumarasi-1].cikisTarihi.yil);
+	}
+	else{
+		printf("%d numarali oda su an bos durumdadir.\n",odaNumarasi);
+	}
+}
+
+void fiyatBilgisiYazdirma(){
+	int kisiSayisi;
+	double toplamTutar=0.0;
+	tarihBilgileri girisTarihi,cikisTarihi;
+	
+	printf("Lutfen kac kisi olacagini giriniz:");
+	scanf("%d",&kisiSayisi);
+	printf("Lutfen giris tarihi bilgisini (gun:ay:yil) seklinde giriniz:");
+	scanf("%d:%d:%d",&girisTarihi.gun,&girisTarihi.ay,&girisTarihi.yil);
+	printf("Lutfen cikis tarihi bilgisini (gun:ay:yil) seklinde giriniz:");
+	scanf("%d:%d:%d",&cikisTarihi.gun,&cikisTarihi.ay,&cikisTarihi.yil);
+	
+	toplamTutar=gunFarkiHesapla(girisTarihi,cikisTarihi)*kisiSayisi*150;
+	printf("Odemeniz gereken toplam tutar:%.2lf",toplamTutar);
+	
+}
+
+void yedekKayitAlma(odaBilgileri *odalar){
+	int i;
+	FILE*otelKayitlari=fopen("otelKayitlari.txt","a");
+	if(otelKayitlari==NULL){
+		fprintf(stderr,"Yedek kayit alinirken bir hata meydana geldi.");
+		exit(1);
+	}
+	for(i=0;i<ODA_SAYISI;i++){
+		if(odalar[i].odaDurumu!=0){
+			fprintf(otelKayitlari,"-------------------------------------------------------------\n");
+			fprintf(otelKayitlari,"odaNumarasi:%d\n",odalar[i].odaNumarasi);
+			fprintf(otelKayitlari,"Musterinin Adi-Soyadi:%s %s\n",odalar[i].musteri.musteriAdi,odalar[i].musteri.musteriSoyadi);
+			fprintf(otelKayitlari,"KisiSayisi:%d\n",odalar[i].kisiSayisi);
+			fprintf(otelKayitlari,"ToplamTutar:%.2lf TL\n",odalar[i].fiyatBilgisi);
+			fprintf(otelKayitlari,"GirisTarihi:%d:%d:%d\n",odalar[i].girisTarihi.gun,odalar[i].girisTarihi.ay,odalar[i].girisTarihi.yil);
+			fprintf(otelKayitlari,"GirisTarihi:%d:%d:%d\n",odalar[i].cikisTarihi.gun,odalar[i].cikisTarihi.ay,odalar[i].cikisTarihi.yil);
+		}
+	}
+}
+
 int main(){
 	int belirlenenSifre=123456,kullanicininGirdigiSifre,odaNumarasi;
 	yetkiSeviyeleri kullaniciYetkisi;
@@ -137,6 +183,7 @@ int main(){
 		ch=getchar();
 		switch(ch){
 			case 'E':
+			case 'e':	
 				if(kullaniciYetkisi==personel){
 					yeniMusteriEkleme(odaDizisi);
 				}
@@ -145,8 +192,13 @@ int main(){
 				}
 				break;
 			case 'S':
+			case 's':	
+				printf("Lutfen sorgulanacak olan odanin numarasini giriniz:");
+				scanf("%d",&odaNumarasi);
+				odaBilgisiSorgulama(odaDizisi,odaNumarasi);
 				break;
 			case 'G':
+			case 'g':	
 				if(kullaniciYetkisi==personel){
 					doluOdaBilgileriYazdirma(odaDizisi);
 				}
@@ -155,6 +207,7 @@ int main(){
 				}
 				break;	
 			case 'C':
+			case 'c':	
 				if(kullaniciYetkisi==personel){
 					printf("Cikis yapmak istediginiz odanin numarasini giriniz:");
 					scanf("%d",&odaNumarasi);
@@ -162,8 +215,12 @@ int main(){
 				}
 				break;	
 			case 'F':
+			case 'f':	
+				fiyatBilgisiYazdirma();
 				break;
-			case 'Q':	
+			case 'Q':
+			case 'q':	
+				yedekKayitAlma(odaDizisi);
 				break;
 			default:
 				break;

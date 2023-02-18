@@ -1,0 +1,27 @@
+-------------------------------------------------------------
+odaNumarasi:92Musterinin Adi-Soyadi:FURKAN TEGRAK
+KisiSayisi:2
+ToplamTutar:300.00 TL
+GirisTarihi:1:1:1999
+GirisTarihi:2:1:1999
+-------------------------------------------------------------
+odaNumarasi:1
+Musterinin Adi-Soyadi:FURKAN TEGRAK
+KisiSayisi:2
+ToplamTutar:900.00 TL
+GirisTarihi:1:1:2023
+GirisTarihi:4:1:2023
+-------------------------------------------------------------
+odaNumarasi:1
+Musterinin Adi-Soyadi:FURKAN TEGRAK
+KisiSayisi:2
+ToplamTutar:600.00 TL
+GirisTarihi:1:1:2023
+GirisTarihi:3:1:2023
+-------------------------------------------------------------
+odaNumarasi:2
+Musterinin Adi-Soyadi:SEM˜H TEGRAK
+KisiSayisi:3
+ToplamTutar:1800.00 TL
+GirisTarihi:1:1:2023
+GirisTarihi:5:1:2023
